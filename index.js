@@ -80,7 +80,12 @@ twitch.on("chat", async (channel, userstate, message, self) => {
           `The ${process.env.COMPARE_CHANNEL} are destroying us. Make sure to share the stream to help us beat them`
         );
       } catch (e) {
-        console.log(e);
+        addMessage(
+          twitch,
+          true,
+          twitchChannel,
+          `Damn it chat.  You broke me. ${process.env.EMOTE_FAIL}`
+        );
       }
       break;
     default:
