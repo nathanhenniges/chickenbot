@@ -54,33 +54,35 @@ twitch.on("chat", async (channel, userstate, message, self) => {
     case "chickens":
       try {
         console.log(twitchChannel);
-        const userChannel = await axios.get(
-          `https://api.twitch.tv/helix/streams?user_login=theprimeagen`,
+        const streams = await axios.get(
+          `https://api.twitch.tv/helix/streams?user_login=${"theprimeagen"}&user_login=${
+            process.env.COMPARE_CHANNEL
+          }`,
           options
         );
-        const compareChannel = await axios.get(
-          `https://api.twitch.tv/helix/streams?user_login=${process.env.COMPARE_CHANNEL}`,
-          options
-        );
-        if (compareChannel > userChannel) {
+
+        console.log(streams.data.data[0]);
+        if (
+          streams.data.data[0].user_name.toLowerCase() ===
+          twitchChannel.toLowerCase()
+        ) {
           return addMessage(
             twitch,
             true,
             twitchChannel,
-            `The ${process.env.COMPARE_CHANNEL} are destroying us. Make sure to share the stream to help us beat ${process.env.COMPARE_CHANNEL}`
+            `We are are destroying ${process.env.COMPARE_CHANNEL}.  Thanks for helping us ${process.env.EMOTES}`
           );
         }
         addMessage(
           twitch,
           true,
           twitchChannel,
-          `We are are destroying ${process.env.COMPARE_CHANNEL}.  Thanks for helping us ${process.env.EMOTES}`
+          `The ${process.env.COMPARE_CHANNEL} are destroying us. Make sure to share the stream to help us beat them`
         );
       } catch (e) {
         console.log(e);
       }
       break;
-
     default:
       break;
   }
