@@ -69,7 +69,10 @@ twitch.on("chat", async (channel, userstate, message, self) => {
             twitch,
             true,
             twitchChannel,
-            `We are are destroying ${process.env.COMPARE_CHANNEL}.  Thanks for helping us ${process.env.EMOTES}`
+            `We are are destroying ${process.env.COMPARE_CHANNEL} by ${
+              streams.data.data[0].viewer_count -
+              streams.data.data[1].viewer_count
+            }.  Thanks for helping us ${process.env.EMOTES}`
           );
         }
         addMessage(
