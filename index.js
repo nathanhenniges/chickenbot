@@ -53,7 +53,6 @@ twitch.on("chat", async (channel, userstate, message, self) => {
     case "chicken":
     case "chickens":
       try {
-        console.log(twitchChannel);
         const streams = await axios.get(
           `https://api.twitch.tv/helix/streams?user_login=${"theprimeagen"}&user_login=${
             process.env.COMPARE_CHANNEL
@@ -61,6 +60,7 @@ twitch.on("chat", async (channel, userstate, message, self) => {
           options
         );
 
+        console.log(streams.data);
         if (
           streams.data.data[0].user_name.toLowerCase() ===
           twitchChannel.toLowerCase()
@@ -76,7 +76,7 @@ twitch.on("chat", async (channel, userstate, message, self) => {
           twitch,
           true,
           twitchChannel,
-          `The ${process.env.COMPARE_CHANNEL} are destroying us. Make sure to share the stream to help us beat them`
+          `The ${process.env.COMPARE_CHANNEL} are destroying us by ${streams.data.data[1].viewer_count} viewers. Make sure to share the stream to help us beat them. ${process.env.EMOTES2}`
         );
       } catch (e) {
         addMessage(
