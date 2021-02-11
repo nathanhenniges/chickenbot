@@ -61,7 +61,6 @@ twitch.on("chat", async (channel, userstate, message, self) => {
           options
         );
 
-        console.log(streams.data.data[0]);
         if (
           streams.data.data[0].user_name.toLowerCase() ===
           twitchChannel.toLowerCase()
